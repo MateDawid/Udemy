@@ -1,5 +1,20 @@
-<form method="post">
-    {% csrf_token %}
-    {{form}}
-    <button>Zaloguj</button>
-<form>
+{% extends 'glowny.html' %}
+{% load bootstrap %}
+
+{% block tytul %} Filmform {% endblock %}
+
+{% block strona %} 
+
+
+<div class="card" style="width: 26rem;">
+  <div class="card-body">
+    <h5 class="card-title">Zaloguj się</h5>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|bootstrap }}
+        <button class="btn btn-success">Zaloguj <i class="fas fa-sign-in-alt"></i></button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,38 +1,46 @@
- {% load static %}
- <!doctype html>
- <html lang="en">
- <head>
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'moj.css' %}">
- </head>
- <body>
+{% extends 'glowny.html' %}
+
+{% block tytul %} Lista filmów {% endblock %}
+
+{% block strona %}
+<div class="jumbotron">
   {% if user.is_authenticated %}
-  Witam {{user.username}}<br>
+  <h1 class="display-12">Witam {{user.username}}</h1>
   <a href="{% url 'logout'%}">Logout</a>
   {% else %}
   <a href="{% url 'login'%}">Login</a>
   {% endif %}
+</div>
+
+   
    <hr>
 
-   <a href="{% url 'nowy_film'%}">Dodaj</a>
-    {% if filmy|length == 0 %}
+  <a href="{% url 'nowy_film'%}">Dodaj</a>
+  {% if filmy|length == 0 %}
       
-      <h2> Brak filmów </h2>
+    <h2> Brak filmów </h2>
     
-    {% else %}
+  {% else %}
       
-      <h2>Ilość filmów w bazie: {{ filmy|length }} </h2>
+    <h2>Ilość filmów w bazie: {{ filmy|length }} </h2>
 
-      {% for film in filmy %}
-      <h3> {{ film }} </h3>
-      <p> {{film.opis}} </p>
-      <a href="{% url 'edytuj_film' film.id %}">Edytuj</a>
-      <a href="{% url 'usun_film' film.id %}">Usuń</a>
-      {% endfor %}
-     
-    {% endif %}
-
-    
-
- </body>
- </html>
+    {% for film in filmy %}
+    <div class="card" style="width: 26rem;">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-9">
+            <h5 class="card-title">{{ film }}</h5>
+          </div>
+          <div class="col-3">
+            <a href="{% url 'edytuj_film' film.id %}"><i class="far fa-2x fa-edit"></i></a>
+            <a href="{% url 'usun_film' film.id %}"><i class="far  fa-2x fa-trash-alt"></i></a>
+          </div>
+        </div>
+        <div class="row">
+        <p class="card-text">{{film.opis}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %} 
+  {% endif %}
+{% endblock %}

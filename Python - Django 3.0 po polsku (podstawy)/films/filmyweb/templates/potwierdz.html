@@ -1,6 +1,12 @@
+{% extends 'glowny.html' %}
+
+{% block tytul %} Potwierdź {% endblock %}
+
+{% block strona %} 
 <h1>Czy na pewno chcesz usunąć film {{ film }}</h1>
 
 <form method="post">
     {% csrf_token %}
     <button type="submit">Usun film</button>
 </form>
+{% endblock %}
