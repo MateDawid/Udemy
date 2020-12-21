@@ -3,11 +3,21 @@
 {% block tytul %} Filmform {% endblock %}
 
 {% block strona %}
-<form method="post" enctype="multipart/form-data">
+<div class="card" style="width: 32rem;">
+  <div class="card-body">
+    <h5 class="card-title">Film form</h5>
+    <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|bootstrap }}
-    <button type="submit">Dodaj film</button>
+        {% if nowy %}
+        <button type="submit">Dodaj film</button>
+        {% else %}
+        <button type="submit">Edytuj film</button>
+        {% endif %}
 </form>
+  </div>
+</div>
+
 <a href="{% url 'wszystkie_filmy' %}">Cofnij</a>
 
 {% endblock %}
