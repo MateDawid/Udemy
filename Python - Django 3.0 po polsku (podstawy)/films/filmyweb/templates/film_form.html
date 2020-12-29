@@ -9,6 +9,7 @@
     <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|bootstrap }}
+    {{ form_dodatkowe|bootstrap }}
         {% if nowy %}
         <button type="submit">Dodaj film</button>
         {% else %}
