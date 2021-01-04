@@ -3,7 +3,17 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Film, DodatkoweInfo, Ocena
 from .forms import FilmForm,DodatkoweInfoForm, OcenaForm
+from rest_framework import viewsets
+from django.contrib.auth.models import User
+from .serializers import UserSerializer, FilmSerializer
 
+class UserView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class FilmView(viewsets.ModelViewSet):
+    queryset = Film.objects.all()
+    serializer_class = FilmSerializer
 
 def wszystkie_filmy(request):
     #return HttpResponse("<h1>To jest nasz pierwszy test<h1>")

@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
+from decouple import config
+from dj_database_url import parse as dburl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e-7dhvk9nmv9ymt!zv%(94#=bkxvquhj7)2f8hf#)+5zil1(^x'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'filmyweb',
-    'bootstrapform'
+    'bootstrapform',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -75,12 +78,8 @@ WSGI_APPLICATION = 'films.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+default_dburl = 'sqlite:///'+os.path.join(BASE_DIR, 'db.sqlite3')
+DATABASES = { 'default': config('DATABASE_URL', default=default_dburl, cast=dburl)}
 
 
 # Password validation
@@ -120,10 +119,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'moje_static')
 STATICFILES_DIRS = ['moje_static']
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'moje_media'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'wszystkie_filmy'
+LOGIN_REDIRECT_URL = 'wszystkie_filmy' 
 LOGOUT_REDIRECT_URL = 'login'
